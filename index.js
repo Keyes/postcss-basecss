@@ -75,30 +75,33 @@ Basecss.prototype.writeToHtmlFile = function () {
     jsdom.env(
         fs.readFileSync(this.options.htmlFile).toString('utf-8'), [],
         function (err, window) {
-            if (err) throw err;
-
-            var csstag = window.document
-                .querySelector('style[data-id="base-css"]');
-
-            // do we already have a Basecss style element?
-            if (!csstag) {
-                // if not, create one and set our data-id
-                csstag = window.document.createElement('style');
-                csstag.setAttribute('data-id', 'base-css');
+            if (err) {
+                throw 'File "' + this.options.htmlFile + '" doesn\'t exist!';
             }
-            // we need the type attribute!
-            csstag.setAttribute('type', 'text/css');
-            // append our build css code
-            csstag.innerHTML = '\n' + self.toString() + '\n';
+            else {
+                var csstag = window.document
+                    .querySelector('style[data-id="base-css"]');
 
-            // append our element to the head area
-            window.document.querySelector('head').appendChild(csstag);
+                // do we already have a Basecss style element?
+                if (!csstag) {
+                    // if not, create one and set our data-id
+                    csstag = window.document.createElement('style');
+                    csstag.setAttribute('data-id', 'base-css');
+                }
+                // we need the type attribute!
+                csstag.setAttribute('type', 'text/css');
+                // append our build css code
+                csstag.innerHTML = '\n' + self.toString() + '\n';
 
-            // write the html file back to the file system
-            fs.writeFileSync(this.options.htmlFile, window.document.innerHTML);
+                // append our element to the head area
+                window.document.querySelector('head').appendChild(csstag);
 
-            // yay!
-            console.log('Success!');
+                // write the html file back to the file system
+                fs.writeFileSync(this.options.htmlFile, window.document.innerHTML);
+
+                // yay!
+                console.log('Success!');
+            }
         }
     );
 };
