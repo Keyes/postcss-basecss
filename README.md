@@ -3,8 +3,8 @@
 [PostCSS] plugin which extracts basic CSS rules for inlining them in your index.html, similar to critical CSS.
 
 [PostCSS]: https://github.com/postcss/postcss
-[ci-img]:  https://travis-ci.org/Keyes/postcss-baseCSS.svg
-[ci]:      https://travis-ci.org/Keyes/postcss-baseCSS
+[ci-img]:  https://travis-ci.org/Keyes/postcss-basecss.svg?branch=master
+[ci]:      https://travis-ci.org/Keyes/postcss-basecss
 
 ```css
 .foo {
@@ -21,7 +21,7 @@
 ## Usage
 
 ```js
-postcss([ require('postcss-baseCSS') ])
+postcss([ require('postcss-basecss') ])
 ```
 
 See [PostCSS] docs for examples for your environment.
