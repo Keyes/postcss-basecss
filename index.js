@@ -68,7 +68,7 @@ Basecss.prototype.getRulesBySelectors = function (selectorArray) {
 // return our data as perfect CSS-String
 Basecss.prototype.toString = function (data) {
     return parseCSS.stringify(
-        { stylesheet: { rules: cssmin(data ? data : this.data) } }
+        { stylesheet: { rules: data ? data : this.data } }
     );
 };
 
@@ -106,7 +106,7 @@ Basecss.prototype.writeToHtmlFile = function () {
             // we need the type attribute!
             csstag.setAttribute('type', 'text/css');
             // append our build css code
-            csstag.innerHTML = '\n' + self.toString() + '\n';
+            csstag.innerHTML = '\n' + cssmin(self.toString()) + '\n';
 
             // append our element to the head area
             head.insertBefore(
