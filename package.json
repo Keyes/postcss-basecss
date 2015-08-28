@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Keyes/postcss-basecss",
   "dependencies": {
     "css": "^2.2.1",
+    "cssmin": "^0.4.3",
     "jsdom-nogyp": "^0.8.3",
     "lodash": "^3.10.1",
     "postcss": "^4.1.16"

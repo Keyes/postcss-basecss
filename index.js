@@ -3,6 +3,7 @@ var parseCSS = require('css');
 var fs = require('fs');
 var _ = require('lodash');
 var jsdom = require('jsdom-nogyp');
+var cssmin = require('cssmin');
 
 // init Basecss
 var Basecss = function (options) {
@@ -67,7 +68,7 @@ Basecss.prototype.getRulesBySelectors = function (selectorArray) {
 // return our data as perfect CSS-String
 Basecss.prototype.toString = function (data) {
     return parseCSS.stringify(
-        { stylesheet: { rules: data ? data : this.data } }
+        { stylesheet: { rules: cssmin(data ? data : this.data) } }
     );
 };
 
@@ -75,10 +76,10 @@ Basecss.prototype.toString = function (data) {
 Basecss.prototype.writeToHtmlFile = function () {
     // callback function this=self workaround
     var self = this;
-    var htmlFile;
+    var file;
 
     try {
-        htmlFile = fs.readFileSync(this.options.htmlFile);
+        file = fs.readFileSync(this.options.htmlFile);
     } catch(err) {
         console.log(
             'File "' + this.options.htmlFile + '" doesn\'t exist!'
@@ -88,12 +89,13 @@ Basecss.prototype.writeToHtmlFile = function () {
 
     // we need jsdom to nicely traverse through our html code
     jsdom.env(
-        htmlFile.toString('utf-8'), [],
+        file.toString('utf-8'), [],
         function (err, window) {
             if(err) throw err;
 
             var csstag = window.document
                 .querySelector('style[data-id="base-css"]');
+            var head = window.document.querySelector('head');
 
             // do we already have a Basecss style element?
             if (!csstag) {
@@ -107,16 +109,21 @@ Basecss.prototype.writeToHtmlFile = function () {
             csstag.innerHTML = '\n' + self.toString() + '\n';
 
             // append our element to the head area
-            window.document.querySelector('head').appendChild(csstag);
+            head.insertBefore(
+                csstag,
+                head.querySelector('link[rel="stylesheet"]')
+            );
 
             // write the html file back to the file system
             fs.writeFileSync(
-                this.options.htmlFile,
+                self.options.htmlFile,
                 window.document.innerHTML
             );
 
             // yay!
-            console.log('Success!');
+            console.log(
+                'Successfully updated "' + self.options.htmlFile + '"!'
+            );
         }
     );
 };
