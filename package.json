@@ -1,6 +1,6 @@
 {
   "name": "postcss-basecss",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "PostCSS plugin which extracts basic CSS rules for inlining them in your index.html, similar to critical CSS",
   "keywords": [
     "postcss",
@@ -14,10 +14,12 @@
     "style"
   ],
   "author": "Julian Kern <mail@juliankern.com>",
-  "contributors": [{
-    "name": "Dennis Sterzenbach",
-    "email": "dennis.sterzenbach@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Dennis Sterzenbach",
+      "email": "dennis.sterzenbach@gmail.com"
+    }
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
