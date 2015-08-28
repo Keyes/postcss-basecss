@@ -76,9 +76,11 @@ Basecss.prototype.writeToHtmlFile = function () {
         fs.readFileSync(this.options.htmlFile).toString('utf-8'), [],
         function (err, window) {
             if (err) {
-                throw 'File "' + this.options.htmlFile + '" doesn\'t exist!';
-            }
-            else {
+                console.log(
+                    'File "' + this.options.htmlFile + '" doesn\'t exist!'
+                );
+                return false;
+            } else {
                 var csstag = window.document
                     .querySelector('style[data-id="base-css"]');
 
@@ -97,7 +99,10 @@ Basecss.prototype.writeToHtmlFile = function () {
                 window.document.querySelector('head').appendChild(csstag);
 
                 // write the html file back to the file system
-                fs.writeFileSync(this.options.htmlFile, window.document.innerHTML);
+                fs.writeFileSync(
+                    this.options.htmlFile,
+                    window.document.innerHTML
+                );
 
                 // yay!
                 console.log('Success!');
