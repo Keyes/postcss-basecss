@@ -15,6 +15,11 @@ var Basecss = function (options) {
             // 'h1'
             // 'large'
         ],
+        propertiesExclude: [
+            'animation[\-a-z]*', 'transition[\-a-z]*',
+            'cursor', 'nav[\-a-z]*', 'resize',
+            'image[\-a-z]*'
+        ],
         includeFontFace: true
     }, options);
 
@@ -116,6 +121,38 @@ Basecss.prototype.writeToHtmlFile = function () {
     );
 };
 
+Basecss.prototype.filterRulesByProperties = function (propertyArray) {
+    propertyArray = propertyArray || this.options.propertiesExclude;
+
+    var rule;
+    var properties;
+    var search;
+
+    for (var r in this.data) {
+        rule = this.data[r];
+        // filter from every rule in the css data
+        properties = rule.declarations;
+
+        // loop over every property in this specific rule
+        for (var i in properties) {
+            // loop over our properties from the options
+            for (var prop in propertyArray) {
+                // do they match?
+                search = properties[i]
+                    .property
+                    .search(propertyArray[prop]);
+
+                if (search !== -1) {
+                    // remove this property!
+                    properties.splice(i, 1);
+                }
+            }
+        }
+    }
+
+    return this;
+};
+
 // shorthand function for the normal way
 Basecss.prototype.run = function () {
     // read the css file and parse it
@@ -124,7 +161,7 @@ Basecss.prototype.run = function () {
         { source: this.options.cssFile }
     ).stylesheet.rules;
 
-    this.fetchRulesBySelectors().writeToHtmlFile();
+    this.fetchRulesBySelectors().filterRulesByProperties().writeToHtmlFile();
     return this;
 };
 
@@ -132,9 +169,9 @@ Basecss.prototype.process = function (str, options) {
     if (options) _.extend(this.options, options);
 
     // read the css file and parse it
-    this.cssData = parseCSS.parse(str).stylesheet.rules;
+    this.cssData = parseCSS.parse(str.toString('utf-8')).stylesheet.rules;
 
-    this.fetchRulesBySelectors().writeToHtmlFile();
+    this.fetchRulesBySelectors().filterRulesByProperties().writeToHtmlFile();
     return this;
 };
 
