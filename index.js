@@ -132,10 +132,7 @@ Basecss.prototype.process = function (str, options) {
     if (options) _.extend(this.options, options);
 
     // read the css file and parse it
-    this.cssData = parseCSS.parse(
-        fs.readFileSync(this.options.cssFile).toString('utf-8'),
-        { source: this.options.cssFile }
-    ).stylesheet.rules;
+    this.cssData = parseCSS.parse(str).stylesheet.rules;
 
     this.fetchRulesBySelectors().writeToHtmlFile();
     return this;
