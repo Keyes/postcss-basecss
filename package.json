@@ -1,0 +1,39 @@
+{
+  "name": "postcss-basecss",
+  "version": "0.0.0",
+  "description": "PostCSS plugin which extracts basic CSS rules for inlining them in your index.html, similar to critical CSS",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "basecss",
+    "base",
+    "basic",
+    "inline",
+    "head",
+    "style"
+  ],
+  "author": "Julian Kern <mail@juliankern.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Keyes/postcss-basecss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Keyes/postcss-basecss/issues"
+  },
+  "homepage": "https://github.com/Keyes/postcss-basecss",
+  "dependencies": {
+    "css": "^2.2.1",
+    "jsdom-nogyp": "^0.8.3",
+    "lodash": "^3.10.1",
+    "postcss": "^5.0.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0",
+  },
+  "scripts": {
+    "test": "gulp"
+  }
+}
