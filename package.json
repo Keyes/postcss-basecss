@@ -1,6 +1,6 @@
 {
   "name": "postcss-basecss",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "PostCSS plugin which extracts basic CSS rules for inlining them in your index.html, similar to critical CSS",
   "keywords": [
     "postcss",
